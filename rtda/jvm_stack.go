@@ -49,3 +49,7 @@ func (self *Stack) peek() *Frame {
 
 	return self._top
 }
+
+func (self *Stack) isEmpty() bool {
+	return self._top == nil
+}

@@ -1,6 +1,9 @@
 package rtda
 
-import "math"
+import (
+	"jvm-go/rtda/heap"
+	"math"
+)
 
 // 和local_vars类似
 type OperandStack struct {
@@ -58,11 +61,11 @@ func (self *OperandStack) PopDouble() float64 {
 	return math.Float64frombits(bits)
 }
 
-func (self *OperandStack) PushRef(ref *Object) {
+func (self *OperandStack) PushRef(ref *heap.Object) {
 	self.slots[self.size].ref = ref
 	self.size++
 }
-func (self *OperandStack) PopRef() *Object {
+func (self *OperandStack) PopRef() *heap.Object {
 	self.size--
 	ref := self.slots[self.size].ref
 	// 设成nil方便回收
@@ -81,4 +84,8 @@ func (self *OperandStack) PopSlot() Slot {
 }
 func (self *OperandStack) PeekSlot() Slot {
 	return self.slots[self.size-1]
+}
+
+func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
+	return self.slots[self.size-1-n].ref
 }

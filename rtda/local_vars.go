@@ -1,6 +1,9 @@
 package rtda
 
-import "math"
+import (
+	"jvm-go/rtda/heap"
+	"math"
+)
 
 type LocalVars []Slot
 
@@ -48,9 +51,17 @@ func (self LocalVars) GetDouble(index uint) float64 {
 	return math.Float64frombits(bits)
 }
 
-func (self LocalVars) SetRef(index uint, ref *Object) {
+func (self LocalVars) SetRef(index uint, ref *heap.Object) {
 	self[index].ref = ref
 }
-func (self LocalVars) GetRef(index uint) *Object {
+func (self LocalVars) GetRef(index uint) *heap.Object {
 	return self[index].ref
+}
+
+func (self LocalVars) SetSlot(index uint, slot Slot) {
+	self[index] = slot
+}
+func (self LocalVars) GetThis() *heap.Object {
+	// todo: 是不是可以认为局部变量表第一个数据一定是类对象引用
+	return self.GetRef(0)
 }

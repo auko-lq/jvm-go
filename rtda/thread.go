@@ -1,5 +1,7 @@
 package rtda
 
+import "jvm-go/rtda/heap"
+
 /*
 JVM
   Thread
@@ -23,8 +25,8 @@ func NewThread() *Thread {
 func (self *Thread) PC() int      { return self.pc }
 func (self *Thread) SetPC(pc int) { self.pc = pc }
 
-func (self *Thread) NewFrame(maxLocals, maxStack uint) *Frame {
-	return newFrame(self, maxLocals, maxStack)
+func (self *Thread) NewFrame(method *heap.Method) *Frame {
+	return newFrame(self, method)
 }
 
 func (self *Thread) PushFrame(frame *Frame) {
@@ -37,4 +39,8 @@ func (self *Thread) PopFrame() *Frame {
 
 func (self *Thread) PeekFrame() *Frame {
 	return self.stack.peek()
+}
+
+func (self *Thread) IsStackEmpty() bool{
+	return self.stack.isEmpty()
 }

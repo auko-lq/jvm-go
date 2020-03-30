@@ -27,7 +27,7 @@ func readMember(reader *ClassReader, cp ConstantPool) *MemberInfo {
 	}
 }
 
-func (self *MemberInfo) AccessFlag() uint16 {
+func (self *MemberInfo) AccessFlags() uint16 {
 	return self.accessFlags
 }
 
@@ -44,6 +44,16 @@ func (self *MemberInfo) CodeAttribute() *CodeAttribute {
 		switch attrInfo.(type) {
 		case *CodeAttribute:
 			return attrInfo.(*CodeAttribute)
+		}
+	}
+	return nil
+}
+
+func (self *MemberInfo) ConstantValueAttribute() *ConstantValueAttribute {
+	for _, attrInfo := range self.attributes {
+		switch attrInfo.(type) {
+		case *ConstantValueAttribute:
+			return attrInfo.(*ConstantValueAttribute)
 		}
 	}
 	return nil

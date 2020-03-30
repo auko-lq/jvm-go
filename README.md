@@ -10,18 +10,19 @@ This project is used to familiarize myself with Golang and JVM. Actually, it wor
 
 - [x] command line startup
 
-  - [ ] <details><summary>supported arguments</summary><pre><code>done:
+  - <details><summary>supported arguments</summary><pre><code>
+  done:
     	help
-    	version
-    	verbose
-    	verbose:class
-    	verbose:inst
-    	classpath
-    	cp
-    	Xjre
-    	class
-    	args
-    todo:
+		version
+      	verbose
+      	verbose:class
+      	verbose:inst
+      	classpath
+      	cp
+      	Xjre
+      	class
+      	args
+todo:
     	Xms
     	Xmx
     	Xss

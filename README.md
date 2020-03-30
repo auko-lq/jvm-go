@@ -12,7 +12,6 @@ This project is used to familiarize myself with Golang and JVM. Actually, it wor
 
 <details><summary>supported arguments</summary><pre><code>
 done:
-    help
 	version
   	verbose
   	verbose:class

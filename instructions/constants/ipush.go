@@ -1,7 +1,7 @@
 package constants
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 // 获取byte或short型, 扩展成int型, 再push到操作数栈
 type BIPUSH struct {

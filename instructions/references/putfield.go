@@ -1,8 +1,8 @@
 package references
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
-import "jvm-go/rtda/heap"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/rtda/heap"
 
 // Set field in object
 // 用法和putstatic一样

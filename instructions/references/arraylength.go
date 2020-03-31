@@ -1,7 +1,7 @@
 package references
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 // Get length of array
 type ARRAY_LENGTH struct{ base.NoOperandsInstruction }

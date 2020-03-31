@@ -1,7 +1,7 @@
 package stack
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 // double和long需要pop2弹出两个slot
 type POP struct{ base.NoOperandsInstruction }

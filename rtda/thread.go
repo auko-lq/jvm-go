@@ -1,6 +1,6 @@
 package rtda
 
-import "jvm-go/rtda/heap"
+import "github.com/aukocharlie/jvm-go/rtda/heap"
 
 /*
 JVM
@@ -41,6 +41,14 @@ func (self *Thread) PeekFrame() *Frame {
 	return self.stack.peek()
 }
 
-func (self *Thread) IsStackEmpty() bool{
+func (self *Thread) IsStackEmpty() bool {
 	return self.stack.isEmpty()
+}
+
+func (self *Thread) GetFrames() []*Frame {
+	return self.stack.getFrames()
+}
+
+func (self *Thread) ClearStack() {
+	self.stack.clear()
 }

@@ -28,12 +28,13 @@ type CodeAttribute struct {
 	attributes     []AttributeInfo
 }
 
-// 第十章处理
+// startPc和endPc对应一部分字节码
+// 这部分字节码对应可能抛出异常的try代码块
 type ExceptionTableEntry struct {
 	startPc   uint16
 	endPc     uint16
-	handlerPc uint16
-	catchType uint16
+	handlerPc uint16 // 如果在try内抛出了catchType或其子类,则通过handlerPc找到catch代码块
+	catchType uint16 // 索引, 能够找到异常类符号引用
 }
 
 func (self *CodeAttribute) readInfo(reader *ClassReader) {
@@ -57,6 +58,17 @@ func readExceptionTable(reader *ClassReader) []*ExceptionTableEntry {
 		}
 	}
 	return exceptionTable
+}
+
+
+func (self *CodeAttribute) LineNumberTableAttribute() *LineNumberTableAttribute {
+	for _, attrInfo := range self.attributes {
+		switch attrInfo.(type) {
+		case *LineNumberTableAttribute:
+			return attrInfo.(*LineNumberTableAttribute)
+		}
+	}
+	return nil
 }
 
 func (self *CodeAttribute) MaxStack() uint {

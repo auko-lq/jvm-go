@@ -1,9 +1,9 @@
 package lang
 
 import (
-	"jvm-go/native"
-	"jvm-go/rtda"
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/native"
+	"github.com/aukocharlie/jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 )
 
 const jlClass = "java/lang/Class"
@@ -31,7 +31,7 @@ func getName0(frame *rtda.Frame) {
 	this := frame.LocalVars().GetThis()
 	class := this.Extra().(*heap.Class)
 	name := class.JavaName()
-	nameObj := heap.JString(class.Loader(), name)
+	nameObj := heap.JavaString(class.Loader(), name)
 	frame.OperandStack().PushRef(nameObj)
 }
 

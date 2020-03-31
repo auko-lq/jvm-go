@@ -1,8 +1,8 @@
 package references
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
-import "jvm-go/rtda/heap"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/rtda/heap"
 
 // Get static field from class
 // 获取静态变量, 压入操作数栈, 用法和putstatic一样
@@ -13,7 +13,12 @@ func (self *GET_STATIC) Execute(frame *rtda.Frame) {
 	fieldRef := cp.GetConstant(self.Index).(*heap.FieldRef)
 	field := fieldRef.ResolvedField()
 	class := field.Class()
-	// todo: init class
+
+	if !class.InitStarted() {
+		frame.RevertNextPC()
+		base.InitClass(frame.Thread(), class)
+		return
+	}
 
 	if !field.IsStatic() {
 		panic("java.lang.IncompatibleClassChangeError")

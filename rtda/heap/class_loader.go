@@ -2,8 +2,8 @@ package heap
 
 import (
 	"fmt"
-	"jvm-go/classfile"
-	"jvm-go/classpath"
+	"github.com/aukocharlie/jvm-go/classfile"
+	"github.com/aukocharlie/jvm-go/classpath"
 )
 
 /*

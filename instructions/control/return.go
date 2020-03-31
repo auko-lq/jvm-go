@@ -1,8 +1,8 @@
 package control
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
 )
 
 // Return void from method

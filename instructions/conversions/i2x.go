@@ -1,7 +1,7 @@
 package conversions
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 // Convert int to byte
 type I2B struct{ base.NoOperandsInstruction }

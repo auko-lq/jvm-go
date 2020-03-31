@@ -1,8 +1,8 @@
 package loads
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
-import "jvm-go/rtda/heap"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/rtda/heap"
 
 // 按索引取数组值
 // Load reference from array

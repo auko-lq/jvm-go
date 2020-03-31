@@ -1,6 +1,6 @@
 package heap
 
-import "jvm-go/classfile"
+import "github.com/aukocharlie/jvm-go/classfile"
 
 // 字段和方法的共有信息
 type ClassMember struct {

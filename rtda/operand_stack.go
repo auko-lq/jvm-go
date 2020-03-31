@@ -1,7 +1,7 @@
 package rtda
 
 import (
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 	"math"
 )
 
@@ -11,7 +11,7 @@ type OperandStack struct {
 	slots []Slot
 }
 
-func newOperandStack(maxStack uint) *OperandStack {
+func NewOperandStack(maxStack uint) *OperandStack {
 	if maxStack > 0 {
 		return &OperandStack{
 			slots: make([]Slot, maxStack),
@@ -88,4 +88,22 @@ func (self *OperandStack) PeekSlot() Slot {
 
 func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
 	return self.slots[self.size-1-n].ref
+}
+
+func (self *OperandStack) PushBoolean(val bool) {
+	if val {
+		self.PushInt(1)
+	} else {
+		self.PushInt(0)
+	}
+}
+func (self *OperandStack) PopBoolean() bool {
+	return self.PopInt() == 1
+}
+
+func (self *OperandStack) Clear() {
+	self.size = 0
+	for i := range self.slots {
+		self.slots[i].ref = nil
+	}
 }

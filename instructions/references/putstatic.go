@@ -1,9 +1,9 @@
 package references
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 )
 
 // Set static field in class

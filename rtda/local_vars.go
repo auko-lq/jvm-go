@@ -1,7 +1,7 @@
 package rtda
 
 import (
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 	"math"
 )
 
@@ -65,3 +65,4 @@ func (self LocalVars) GetThis() *heap.Object {
 	// todo: 是不是可以认为局部变量表第一个数据一定是类对象引用
 	return self.GetRef(0)
 }
+

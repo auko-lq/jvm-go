@@ -2,14 +2,14 @@ package references
 
 import (
 	"fmt"
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 )
 
 // Invoke instance method; dispatch based on class
 // 动态绑定的情况下, 不能用invokeinterface的就用这个
-// 和virtualinterface指令的区别在于
+// 和invokeinterface指令的区别在于
 // 由于类的继承层次是固定的, 所以可以使用一种叫做vtable的技术来加速方法查找
 // todo: vtable
 type INVOKE_VIRTUAL struct{ base.Index16Instruction }
@@ -23,14 +23,8 @@ func (self *INVOKE_VIRTUAL) Execute(frame *rtda.Frame) {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
 
-	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotsCount() - 1)
+	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
-		// hack!
-		if methodRef.Name() == "println" {
-			_println(frame.OperandStack(), methodRef.Descriptor())
-			return
-		}
-
 		panic("java.lang.NullPointerException")
 	}
 

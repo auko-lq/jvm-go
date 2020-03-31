@@ -1,8 +1,8 @@
 package stores
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
 )
 
 // Store int into local variable

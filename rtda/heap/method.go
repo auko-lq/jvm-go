@@ -1,13 +1,15 @@
 package heap
 
-import "jvm-go/classfile"
+import "github.com/aukocharlie/jvm-go/classfile"
 
 type Method struct {
 	ClassMember
-	maxStack     uint
-	maxLocals    uint
-	code         []byte
-	argSlotCount uint
+	maxStack        uint
+	maxLocals       uint
+	code            []byte
+	argSlotCount    uint
+	exceptionTable  ExceptionTable
+	lineNumberTable *classfile.LineNumberTableAttribute
 }
 
 func newMethods(class *Class, cfMethods []*classfile.MemberInfo) []*Method {
@@ -36,7 +38,19 @@ func (self *Method) copyAttributes(cfMethod *classfile.MemberInfo) {
 		self.maxStack = codeAttr.MaxStack()
 		self.maxLocals = codeAttr.MaxLocals()
 		self.code = codeAttr.Code()
+		self.exceptionTable = newExceptionTable(codeAttr.ExceptionTable(), self.class.constantPool)
+		self.lineNumberTable = codeAttr.LineNumberTableAttribute()
 	}
+}
+
+func (self *Method) GetLineNumber(pc int) int {
+	if self.IsNative() {
+		return -2
+	}
+	if self.lineNumberTable == nil {
+		return -1
+	}
+	return self.lineNumberTable.GetLineNumber(pc)
 }
 
 // 计算方法参数占用slot数量
@@ -75,6 +89,14 @@ func (self *Method) injectCodeAttribute(returnType string) {
 	}
 }
 
+func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
+	handler := self.exceptionTable.findExceptionHandler(exClass, pc)
+	if handler != nil {
+		return handler.handlerPc
+	}
+	return -1
+}
+
 func (self *Method) IsSynchronized() bool {
 	return 0 != self.accessFlags&ACC_SYNCHRONIZED
 }
@@ -104,6 +126,6 @@ func (self *Method) MaxLocals() uint {
 func (self *Method) Code() []byte {
 	return self.code
 }
-func (self *Method) ArgSlotsCount() uint {
+func (self *Method) ArgSlotCount() uint {
 	return self.argSlotCount
 }

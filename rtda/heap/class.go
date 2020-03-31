@@ -1,7 +1,7 @@
 package heap
 
 import (
-	"jvm-go/classfile"
+	"github.com/aukocharlie/jvm-go/classfile"
 	"strings"
 )
 
@@ -21,6 +21,7 @@ type Class struct {
 	staticVars        Slots
 	initStarted       bool
 	jClass            *Object // java.lang.Class 实例
+	sourceFile        string
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -32,6 +33,7 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.constantPool = newConstantPool(class, cf.ConstantPool())
 	class.fields = newFields(class, cf.Fields())
 	class.methods = newMethods(class, cf.Methods())
+	class.sourceFile = getSourceFile(cf)
 	return class
 }
 
@@ -70,6 +72,7 @@ func (self *Class) StartInit() {
 func (self *Class) Name() string {
 	return self.name
 }
+
 // 转换成java.lang.Object这样的形式
 func (self *Class) JavaName() string {
 	return strings.Replace(self.name, "/", ".", -1)
@@ -95,6 +98,17 @@ func (self *Class) Loader() *ClassLoader {
 func (self *Class) JClass() *Object {
 	return self.jClass
 }
+func (self *Class) SourceFile() string {
+	return self.sourceFile
+}
+
+// 获取源文件名, 注意:不是每个class文件都有源文件信息
+func getSourceFile(cf *classfile.ClassFile) string {
+	if sfAttr := cf.SourceFileAttribute(); sfAttr != nil {
+		return sfAttr.FileName()
+	}
+	return "Unknown"
+}
 
 // jvms 5.4.4
 func (self *Class) isAccessibleTo(other *Class) bool {
@@ -112,22 +126,35 @@ func (self *Class) GetPackageName() string {
 }
 
 func (self *Class) GetMainMethod() *Method {
-	return self.getStaticMethod("main", "([Ljava/lang/String;)V")
+	return self.GetStaticMethod("main", "([Ljava/lang/String;)V")
 }
 
 // 类初始化方法
 func (self *Class) GetClinitMethod() *Method {
-	return self.getStaticMethod("<clinit>", "()V")
+	return self.GetStaticMethod("<clinit>", "()V")
 }
 
 // 获取静态方法
-func (self *Class) getStaticMethod(name, descriptor string) *Method {
+func (self *Class) GetStaticMethod(name, descriptor string) *Method {
 	for _, method := range self.methods {
 		if method.IsStatic() &&
 			method.name == name &&
 			method.descriptor == descriptor {
 
 			return method
+		}
+	}
+	return nil
+}
+
+func (self *Class) getMethod(name, descriptor string, isStatic bool) *Method {
+	for c := self; c != nil; c = c.superClass {
+		for _, method := range c.methods {
+			if method.IsStatic() == isStatic &&
+				method.name == name &&
+				method.descriptor == descriptor {
+				return method
+			}
 		}
 	}
 	return nil
@@ -163,4 +190,23 @@ func (self *Class) isJlCloneable() bool {
 }
 func (self *Class) isJioSerializable() bool {
 	return self.name == "java/io/Serializable"
+}
+func (self *Class) IsPrimitive() bool {
+	_, ok := primitiveTypes[self.name]
+	return ok
+}
+
+// 获取实例方法
+func (self *Class) GetInstanceMethod(name, descriptor string) *Method {
+	return self.getMethod(name, descriptor, false)
+}
+
+// 获取静态对象
+func (self *Class) GetRefVar(fieldName, fieldDescriptor string) *Object {
+	field := self.getField(fieldName, fieldDescriptor, true)
+	return self.staticVars.GetRef(field.slotId)
+}
+func (self *Class) SetRefVar(fieldName, fieldDescriptor string, ref *Object) {
+	field := self.getField(fieldName, fieldDescriptor, true)
+	self.staticVars.SetRef(field.slotId, ref)
 }

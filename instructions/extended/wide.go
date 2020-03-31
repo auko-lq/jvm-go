@@ -1,11 +1,11 @@
 package extended
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/instructions/loads"
-	"jvm-go/instructions/math"
-	"jvm-go/instructions/stores"
-	"jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/instructions/loads"
+	"github.com/aukocharlie/jvm-go/instructions/math"
+	"github.com/aukocharlie/jvm-go/instructions/stores"
+	"github.com/aukocharlie/jvm-go/rtda"
 )
 
 // Extend local variable index by additional bytes

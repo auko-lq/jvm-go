@@ -7,6 +7,7 @@ type Object struct {
 	// 由于有类对象的存在, 这种对象的class字段指向的是java.lang.Class
 	// 所以需要加多一个字段extra的指向来标记是谁的类对象
 	// 这样才是双向
+	// 同时, 也可以用来存储异常对象的调用链
 }
 
 func newObject(class *Class) *Object {
@@ -22,6 +23,9 @@ func (self *Object) Class() *Class {
 }
 func (self *Object) Fields() Slots {
 	return self.data.(Slots)
+}
+func (self *Object) Data() interface{} {
+	return self.data
 }
 func (self *Object) Extra() interface{} {
 	return self.extra

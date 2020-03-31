@@ -28,15 +28,17 @@ func parseCmd() *Cmd {
 	flag.BoolVar(&cmd.verboseClassFlag, "verbose:class", false, "enable verbose output")
 	flag.BoolVar(&cmd.verboseInstFlag, "verbose:inst", false, "enable verbose output")
 	flag.StringVar(&cmd.cpOption, "classpath", "", "classpath")
-	flag.StringVar(&cmd.cpOption, "cp", "", "classpath")
+	flag.StringVar(&cmd.cpOption, "cp", "E:/project/java/pebble/stone/out/production/pebble/pebble", "classpath")
 	flag.StringVar(&cmd.XjreOption, "Xjre", "", "path to jre")
 	flag.StringVar(&cmd.XjreOption, "Xms", "", "path to jre")
 	flag.Parse()
 	args := flag.Args()
 	if len(args) > 0 {
-		cmd.class = args[0]
+		// cmd.class = args[0]
+		cmd.class = "Test"
 		cmd.args = args[1:]
 	}
+	cmd.class = "Test"
 	return cmd
 }
 

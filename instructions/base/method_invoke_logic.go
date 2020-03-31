@@ -1,15 +1,16 @@
 package base
 
-
-import "jvm-go/rtda"
-import "jvm-go/rtda/heap"
+import (
+	"github.com/aukocharlie/jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
+)
 
 func InvokeMethod(invokerFrame *rtda.Frame, method *heap.Method) {
 	thread := invokerFrame.Thread()
 	newFrame := thread.NewFrame(method)
 	thread.PushFrame(newFrame)
 
-	argSlotCount := int(method.ArgSlotsCount())
+	argSlotCount := int(method.ArgSlotCount())
 	if argSlotCount > 0 {
 		for i := argSlotCount - 1; i >= 0; i-- {
 			slot := invokerFrame.OperandStack().PopSlot()

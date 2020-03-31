@@ -1,6 +1,6 @@
 package rtda
 
-import "jvm-go/rtda/heap"
+import "github.com/aukocharlie/jvm-go/rtda/heap"
 
 // 栈帧, 链表节点
 type Frame struct {
@@ -17,7 +17,7 @@ func newFrame(thread *Thread, method *heap.Method) *Frame {
 		thread:       thread,
 		method:       method,
 		localVars:    newLocalVars(method.MaxLocals()),
-		operandStack: newOperandStack(method.MaxStack()),
+		operandStack: NewOperandStack(method.MaxStack()),
 	}
 }
 

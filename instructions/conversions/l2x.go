@@ -1,7 +1,7 @@
 package conversions
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 // Convert long to double
 type L2D struct{ base.NoOperandsInstruction }

@@ -1,7 +1,7 @@
 package loads
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 // Load int from local variable
 type ILOAD struct{ base.Index8Instruction }

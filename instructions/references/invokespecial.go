@@ -1,9 +1,9 @@
 package references
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 )
 
 // Invoke instance method;
@@ -30,7 +30,7 @@ func (self *INVOKE_SPECIAL) Execute(frame *rtda.Frame) {
 	}
 
 	// 实例方法会多个this, 把它拿出来
-	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotsCount() - 1)
+	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
 		panic("java.lang.NullPointerException")
 	}

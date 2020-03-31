@@ -36,3 +36,13 @@ func utf16ToString(s []uint16) string {
 	runes := utf16.Decode(s) // func Decode(s []uint16) []rune
 	return string(runes)
 }
+
+// 若常量池有则返回字符串, 若无则放入
+func InternString(jStr *Object) *Object {
+	goStr := GoString(jStr)
+	if internedStr, ok := internedStrings[goStr]; ok {
+		return internedStr
+	}
+	internedStrings[goStr] = jStr
+	return jStr
+}

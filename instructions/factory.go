@@ -2,17 +2,18 @@ package instructions
 
 import (
 	"fmt"
-	"jvm-go/instructions/base"
-	. "jvm-go/instructions/comparisons"
-	. "jvm-go/instructions/constants"
-	. "jvm-go/instructions/control"
-	. "jvm-go/instructions/conversions"
-	. "jvm-go/instructions/extended"
-	. "jvm-go/instructions/loads"
-	. "jvm-go/instructions/math"
-	. "jvm-go/instructions/references"
-	. "jvm-go/instructions/stack"
-	. "jvm-go/instructions/stores"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	. "github.com/aukocharlie/jvm-go/instructions/comparisons"
+	. "github.com/aukocharlie/jvm-go/instructions/constants"
+	. "github.com/aukocharlie/jvm-go/instructions/control"
+	. "github.com/aukocharlie/jvm-go/instructions/conversions"
+	. "github.com/aukocharlie/jvm-go/instructions/extended"
+	. "github.com/aukocharlie/jvm-go/instructions/loads"
+	. "github.com/aukocharlie/jvm-go/instructions/math"
+	. "github.com/aukocharlie/jvm-go/instructions/references"
+	. "github.com/aukocharlie/jvm-go/instructions/reserved"
+	. "github.com/aukocharlie/jvm-go/instructions/stack"
+	. "github.com/aukocharlie/jvm-go/instructions/stores"
 )
 
 // NoOperandsInstruction singletons
@@ -161,10 +162,11 @@ var (
 	areturn     = &ARETURN{}
 	_return     = &RETURN{}
 	arraylength = &ARRAY_LENGTH{}
-	// athrow        = &ATHROW{}
+	athrow        = &ATHROW{}
 	// monitorenter  = &MONITOR_ENTER{}
 	// monitorexit   = &MONITOR_EXIT{}
 	// invoke_native = &INVOKE_NATIVE{}
+	invoke_native = &INVOKE_NATIVE{}
 )
 
 func NewInstruction(opcode byte) base.Instruction {
@@ -551,8 +553,8 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &ANEW_ARRAY{}
 	case 0xbe:
 		return arraylength
-	// case 0xbf:
-	// 	return athrow
+	case 0xbf:
+		return athrow
 	case 0xc0:
 		return &CHECK_CAST{}
 	case 0xc1:
@@ -574,7 +576,8 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0xc9:
 	// 	return &JSR_W{}
 	// case 0xca: breakpoint
-	// case 0xfe: impdep1
+	case 0xfe:
+		return invoke_native
 	// case 0xff: impdep2
 	default:
 		panic(fmt.Errorf("Unsupported opcode: 0x%x!", opcode))

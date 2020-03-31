@@ -1,0 +1,31 @@
+package lang
+
+import (
+	"github.com/aukocharlie/jvm-go/native"
+	"github.com/aukocharlie/jvm-go/rtda"
+	"math"
+)
+
+const jlFloat = "java/lang/Float"
+
+func init() {
+	native.Register(jlFloat, "floatToRawIntBits", "(F)I", floatToRawIntBits)
+	native.Register(jlFloat, "intBitsToFloat", "(I)F", intBitsToFloat)
+}
+
+// 返回浮点数的编码
+// public static native int floatToRawIntBits(float value);
+// (F)I
+func floatToRawIntBits(frame *rtda.Frame) {
+	value := frame.LocalVars().GetFloat(0)
+	bits := math.Float32bits(value) // todo
+	frame.OperandStack().PushInt(int32(bits))
+}
+
+// public static native float intBitsToFloat(int bits);
+// (I)F
+func intBitsToFloat(frame *rtda.Frame) {
+	bits := frame.LocalVars().GetInt(0)
+	value := math.Float32frombits(uint32(bits)) // todo
+	frame.OperandStack().PushFloat(value)
+}

@@ -1,7 +1,7 @@
 package control
 
-import "jvm-go/instructions/base"
-import "jvm-go/rtda"
+import "github.com/aukocharlie/jvm-go/instructions/base"
+import "github.com/aukocharlie/jvm-go/rtda"
 
 /*
 	实现switch的方式之一, 当case值可以编码成一个索引表时使用, 即

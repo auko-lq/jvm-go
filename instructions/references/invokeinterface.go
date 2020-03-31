@@ -1,9 +1,9 @@
 package references
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
+	"github.com/aukocharlie/jvm-go/rtda/heap"
 )
 
 // Invoke interface method
@@ -32,7 +32,7 @@ func (self *INVOKE_INTERFACE) Execute(frame *rtda.Frame) {
 		panic("java.lang.IncompatibleClassChangeError")
 	}
 
-	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotsCount() - 1)
+	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
 		panic("java.lang.NullPointerException") // todo
 	}

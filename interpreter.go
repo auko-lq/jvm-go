@@ -2,31 +2,15 @@ package main
 
 import (
 	"fmt"
-	"jvm-go/instructions"
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
-	"jvm-go/rtda/heap"
+	"github.com/aukocharlie/jvm-go/instructions"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/rtda"
 )
 
 // LogInst 表示是否把指令执行信息打印到控制台
-func interpret(method *heap.Method, logInst bool, args []string) {
-	thread := rtda.NewThread()
-	frame := thread.NewFrame(method)
-	thread.PushFrame(frame)
-	jArgs := createArgsArray(method.Class().Loader(), args)
-	frame.LocalVars().SetRef(0, jArgs)
+func interpret(thread *rtda.Thread, logInst bool) {
 	defer catchErr(thread)
 	loop(thread, logInst)
-}
-
-func createArgsArray(loader *heap.ClassLoader, args []string) *heap.Object {
-	stringClass := loader.LoadClass("java/lang/String")
-	argsArr := stringClass.ArrayClass().NewArray(uint(len(args)))
-	jArgs := argsArr.Refs()
-	for i, arg := range args {
-		jArgs[i] = heap.JavaString(loader, arg)
-	}
-	return argsArr
 }
 
 // 捕获异常

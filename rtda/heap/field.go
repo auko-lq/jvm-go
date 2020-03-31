@@ -1,6 +1,6 @@
 package heap
 
-import "jvm-go/classfile"
+import "github.com/aukocharlie/jvm-go/classfile"
 
 type Field struct {
 	ClassMember

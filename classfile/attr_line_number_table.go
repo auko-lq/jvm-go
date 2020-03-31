@@ -31,7 +31,7 @@ func (self *LineNumberTableAttribute) readInfo(reader *ClassReader) {
 	}
 }
 
-// 第十章处理
+
 func (self *LineNumberTableAttribute) GetLineNumber(pc int) int {
 	for i := len(self.lineNumberTable) - 1; i >= 0; i-- {
 		entry := self.lineNumberTable[i]

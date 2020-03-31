@@ -28,20 +28,13 @@ todo:
 </code></pre></details>
 
 - [x] load and parse class file
-
 - [x] runtime data
-
 - [x] JVM instructions ( 195 instructions completed )
-
 - [x] method call
-
 - [x] array support
-
 - [x] string support
-
-- [ ] native method call
-
-- [ ] exception handling
-
+- [x] native method call
+- [x] exception handling
+- [ ] implement native methods...
 - [ ] multifaceted optimization...
 

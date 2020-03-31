@@ -1,13 +1,15 @@
 package reserved
 
 import (
-	"jvm-go/instructions/base"
-	"jvm-go/rtda"
-	"jvm-go/native"
-	_"jvm-go/native/java/lang"
+	"github.com/aukocharlie/jvm-go/instructions/base"
+	"github.com/aukocharlie/jvm-go/native"
+	_ "github.com/aukocharlie/jvm-go/native/java/io"
+	_ "github.com/aukocharlie/jvm-go/native/java/lang"
+	_ "github.com/aukocharlie/jvm-go/native/sun/misc"
+	"github.com/aukocharlie/jvm-go/rtda"
 )
 
-type INVOKE_NATIVE struct{
+type INVOKE_NATIVE struct {
 	base.NoOperandsInstruction
 }
 
@@ -21,5 +23,6 @@ func (self *INVOKE_NATIVE) Execute(frame *rtda.Frame) {
 		methodInfo := className + "." + methodName + methodDescriptor
 		panic("java.lang.UnsatisfiedLinkError: " + methodInfo)
 	}
+
 	nativeMethod(frame)
 }
